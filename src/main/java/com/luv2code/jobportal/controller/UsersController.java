@@ -55,12 +55,12 @@ public class UsersController {
             return "register";
         }
         usersService.addNew(users);
-        return "dashboard";
+        return "redirect:/dashboard/";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "dashboard";
+        return "login";
     }
 
     @GetMapping("/logout")
