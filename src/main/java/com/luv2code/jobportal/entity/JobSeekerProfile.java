@@ -10,12 +10,12 @@ import java.util.List;
 public class JobSeekerProfile {
 
     @Id
-    private int userAccountId;
+    private Integer userAccountId;
 
     @OneToOne
     @JoinColumn(name = "user_account_id")
     @MapsId
-    private Users usersId;
+    private Users userId;
 
     private String firstName;
     private String lastName;
@@ -34,13 +34,13 @@ public class JobSeekerProfile {
     public JobSeekerProfile() {
     }
 
-    public JobSeekerProfile(Users usersId) {
-        this.usersId = usersId;
+    public JobSeekerProfile(Users userId) {
+        this.userId = userId;
     }
 
-    public JobSeekerProfile(int userAccountId, Users usersId, String firstName, String lastName, String city, String state, String country, String workAuthorization, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
+    public JobSeekerProfile(Integer userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String workAuthorization, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
         this.userAccountId = userAccountId;
-        this.usersId = usersId;
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
@@ -53,20 +53,20 @@ public class JobSeekerProfile {
         this.skills = skills;
     }
 
-    public int getUserAccountId() {
+    public Integer getUserAccountId() {
         return userAccountId;
     }
 
-    public void setUserAccountId(int userAccountId) {
+    public void setUserAccountId(Integer userAccountId) {
         this.userAccountId = userAccountId;
     }
 
-    public Users getUsersId() {
-        return usersId;
+    public Users getUserId() {
+        return userId;
     }
 
-    public void setUsersId(Users usersId) {
-        this.usersId = usersId;
+    public void setUserId(Users userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -149,11 +149,17 @@ public class JobSeekerProfile {
         this.skills = skills;
     }
 
+    @Transient
+    public String getPhotosImagePath(){
+        if (profilePhoto == null || userAccountId == null) return null;
+        return "/photos/candidate/" + userAccountId + "/" + profilePhoto;
+    }
+
     @Override
     public String toString() {
         return "JobSeekerProfile{" +
                 "userAccountId=" + userAccountId +
-                ", usersId=" + usersId +
+                ", userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +
@@ -163,7 +169,6 @@ public class JobSeekerProfile {
                 ", employmentType='" + employmentType + '\'' +
                 ", resume='" + resume + '\'' +
                 ", profilePhoto='" + profilePhoto + '\'' +
-                ", skills=" + skills +
                 '}';
     }
 }
